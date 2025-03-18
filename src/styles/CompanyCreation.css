@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -43,13 +43,13 @@
   left: 70px;
 }
 
-.content {
+ .content {
   text-align: center;
   min-height: 120px;
   line-height: 120px;
   color: #bab8b8;
   background-color: aliceblue;
-}
+} 
 
 .container {
   display: flex;
@@ -116,7 +116,7 @@
 .error {
   color: red;
   font-size: 12px;
-  margin-top: 5px; /* Space between error and input field */
+  margin-top: 5px; 
   align-self: flex-start;
   line-height: 1;
 }
@@ -140,4 +140,4 @@
 .upload-button {
   display: flex;
   justify-content: flex-start;
-}
+} */

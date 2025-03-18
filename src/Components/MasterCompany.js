@@ -1,7 +1,6 @@
 import React from "react";
 import "../styles/Masters.css";
 import { Form, Input, Button, Upload, Select } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
 export default function MasterCompany() {
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -15,7 +14,7 @@ export default function MasterCompany() {
   const cities = ["City 1", "City 2", "City 3"];
   return (
     <div className="container">
-      <div classNme="form-container">
+      <div className="form-container">
         <Form name="companyForm" className="form-layout">
           {/* First Row */}
           <div className="form-row">
@@ -30,7 +29,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Company Name</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -44,7 +43,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Company Alias Name</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -58,7 +57,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Company Register Number</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -72,7 +71,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Company Code</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
           </div>
@@ -90,7 +89,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">GST Number</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -104,7 +103,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">PAN Number</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -118,7 +117,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Phone Number</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -132,7 +131,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Email Id</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
           </div>
@@ -150,9 +149,10 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Address Line 1</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
+
             <div className="form-item">
               <Form.Item
                 name="addressLine2"
@@ -164,9 +164,10 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Address Line 2</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
+
             <div className="form-item">
               <Form.Item
                 name="addressLine3"
@@ -178,9 +179,10 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Address Line 3</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
+
             <div className="form-item">
               <Form.Item
                 name="city"
@@ -192,13 +194,16 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">City</p>
-                <Select placeholder="Select a city">
-                  {cities.map((city, index) => (
-                    <Option key={index} value={city}>
-                      {city}
-                    </Option>
-                  ))}
-                </Select>
+                <select id="city" className="input-field">
+                  <option value="" disabled selected>
+                    Select a city
+                  </option>
+                  <option value="delhi">Delhi</option>
+                  <option value="mumbai">Mumbai</option>
+                  <option value="bangalore">Bangalore</option>
+                  <option value="chennai">Chennai</option>
+                  <option value="kolkata">Kolkata</option>
+                </select>
               </Form.Item>
             </div>
           </div>
@@ -216,13 +221,16 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">State</p>
-                <Select placeholder="Select a state">
-                  {states.map((state, index) => (
-                    <Option key={index} value={state}>
-                      {state}
-                    </Option>
-                  ))}
-                </Select>
+                <select id="state" className="input-field">
+                  <option value="" disabled selected>
+                    Select a state
+                  </option>
+                  <option value="delhi">Delhi</option>
+                  <option value="maharashtra">Maharashtra</option>
+                  <option value="karnataka">Karnataka</option>
+                  <option value="tamilnadu">Tamil Nadu</option>
+                  <option value="westBengal">West Bengal</option>
+                </select>
               </Form.Item>
             </div>
             <div className="form-item">
@@ -236,13 +244,16 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Country</p>
-                <Select placeholder="Select a country">
-                  {countries.map((country, index) => (
-                    <Option key={index} value={country}>
-                      {country}
-                    </Option>
-                  ))}
-                </Select>
+                <select id="country" className="input-field">
+                  <option value="" disabled selected>
+                    Select a country
+                  </option>
+                  <option value="india">India</option>
+                  <option value="usa">United States</option>
+                  <option value="canada">Canada</option>
+                  <option value="uk">United Kingdom</option>
+                  <option value="australia">Australia</option>
+                </select>
               </Form.Item>
             </div>
             <div className="form-item">
@@ -256,7 +267,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Pincode</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -270,7 +281,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Contact Person"</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
           </div>
@@ -288,7 +299,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Contact Person Phone</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -302,7 +313,7 @@ export default function MasterCompany() {
                 ]}
               >
                 <p className="label">Contact Person Email</p>
-                <Input />
+                <Input className="input-field" />
               </Form.Item>
             </div>
             <div className="form-item">
@@ -317,15 +328,15 @@ export default function MasterCompany() {
           </div>
 
           {/* Submit button */}
+          <div className="btn-container">
+            <button type="button" className="cancel-button">
+              CANCEL
+            </button>
+            <Button type="primary" htmlType="submit">
+              SUBMIT
+            </Button>
+          </div>
         </Form>
-      </div>
-      <div className="btn-container">
-        <button type="button" className="cancel-button">
-          CANCEL
-        </button>
-        <Button type="primary" htmlType="submit">
-          SUBMIT
-        </Button>
       </div>
       <div className="table-container">
         <table>

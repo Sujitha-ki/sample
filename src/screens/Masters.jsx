@@ -15,7 +15,7 @@ export default function Masters() {
     {
       key: "1",
       label: "Company",
-      //   children:,
+      children: <MasterCompany />,
     },
     {
       key: "2",
@@ -28,5 +28,23 @@ export default function Masters() {
       children: <MasterUser />,
     },
   ];
-  return <div className="main-container"></div>;
+  const { Content } = Layout;
+  return (
+    <Layout className="layout">
+      <SiderComponent />
+      <div className="main-content">
+        <HeaderComponent />
+        <div className="content">
+          <div className="tabs-container">
+            <Tabs
+              className="tabs"
+              defaultActiveKey="1"
+              items={items}
+              onChange={onChange}
+            />
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
 }
