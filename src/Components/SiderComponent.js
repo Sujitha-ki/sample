@@ -22,11 +22,51 @@ const SiderComponent = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const items = [
-    getItem("Overview", "1", <img src={OverviewActive} alt="Overview" />),
-    getItem("Masters", "2", <img src={MastersActive} alt="Masters" />),
-    getItem("Contract", "3", <img src={ContractActive} alt="Contract" />),
-    getItem("Settings", "4", <img src={SettingActive} alt="settings" />),
-    getItem("logout", "5", <img src={logout} alt="logout" />),
+    getItem(
+      "Overview",
+      "1",
+      <img
+        src={OverviewActive}
+        alt="Overview"
+        style={{ width: "16px", height: "16px" }}
+      />
+    ),
+    getItem(
+      "Masters",
+      "2",
+      <img
+        src={MastersActive}
+        alt="Masters"
+        style={{ width: "16px", height: "16px" }}
+      />
+    ),
+    getItem(
+      "Contract",
+      "3",
+      <img
+        src={ContractActive}
+        alt="Contract"
+        style={{ width: "16px", height: "16px" }}
+      />
+    ),
+    getItem(
+      "Settings",
+      "4",
+      <img
+        src={SettingActive}
+        alt="settings"
+        style={{ width: "16px", height: "16px" }}
+      />
+    ),
+    getItem(
+      "logout",
+      "5",
+      <img
+        src={logout}
+        alt="logout"
+        style={{ width: "16px", height: "16px" }}
+      />
+    ),
   ];
 
   return (
