@@ -19,7 +19,7 @@ function getItem(label, key, icon, children) {
 }
 
 const SiderComponent = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   const items = [
     getItem(
@@ -40,6 +40,7 @@ const SiderComponent = () => {
         style={{ width: "16px", height: "16px" }}
       />
     ),
+
     getItem(
       "Contract",
       "3",
