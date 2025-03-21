@@ -5,7 +5,12 @@ import downarrow from "../assets/image/downarrow.svg";
 import Frame from "../assets/image/Frame.svg";
 import message from "../assets/image/message.svg";
 import { Layout } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  MessageOutlined,
+  BellOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import { Input, Space, Form } from "antd";
 
 export default function HeaderComponent() {
@@ -28,47 +33,13 @@ export default function HeaderComponent() {
         >
           <Input
             placeholder="Search"
-            prefix={<SearchOutlined />}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "center",
-            }}
+            prefix={<SearchOutlined className="searchicon" />}
+            className="searchicon-postion"
           />
-          {/* <img
-            src={Search}
-            alt="search"
-            style={{
-              width: "16",
-              height: "16",
-            }}
-          /> */}
-          <img
-            src={message}
-            alt="message"
-            style={{
-              width: "16",
-              height: "16",
-            }}
-          />
-          <img
-            src={bell}
-            alt="bell"
-            style={{
-              width: "16",
-              height: "16",
-            }}
-          />
+          <MessageOutlined className="messageicon" />
+          <BellOutlined className="bellicon" />
           <img src={Frame} alt="frame" style={{ width: "16", height: "16" }} />
-          <img
-            src={downarrow}
-            alt="downarrow"
-            style={{
-              width: "16",
-              height: "16",
-            }}
-          />
+          <DownOutlined className="downarrowicon" />
         </div>
       </Header>
     </>

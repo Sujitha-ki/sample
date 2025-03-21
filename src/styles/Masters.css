@@ -11,7 +11,7 @@
   background-color: #fff;
   height: 100vh;
 }
-
+/* headerstyles */
 .header {
   height: 88px;
   left: 70px;
@@ -29,10 +29,33 @@
   letter-spacing: 0.2px;
   color: #0f172a;
 }
-
-.layout {
+.searchicon-postion {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
+
+.searchicon {
+  width: 20;
+  height: 20;
+  color: grey;
+}
+.messageicon {
+  width: 18px;
+  height: 16px;
+  color: grey;
+}
+.bellicon {
+  width: 23px;
+  height: 23px;
+  border-width: 1.5px;
+}
+.downarrowicon {
+  width: 8px;
+  height: 8px;
+}
+/* contentstyles */
 .content {
   padding: 20px;
 }
@@ -47,6 +70,29 @@
   width: 100%;
   height: auto;
   padding: 20px;
+}
+.form-container1 {
+  background-color: white;
+  border-radius: 16px;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+}
+.form-container2 {
+  background-color: white;
+  border-radius: 16px;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-top: 20px;
+}
+.form-container3 {
+  background-color: white;
+  border-radius: 16px;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-top: 20px;
 }
 .tabs-container {
   margin-top: 0;
@@ -170,3 +216,5 @@ button[type="submit"]:hover {
   flex-direction: row;
   align-items: center;
 }
+
+/* branches */

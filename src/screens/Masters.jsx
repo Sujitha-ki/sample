@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Masters.css";
 import { Tabs, Layout } from "antd";
 import HeaderComponent from "../Components/HeaderComponent";
@@ -8,6 +8,11 @@ import MasterBranch from "../Components/MasterBranch";
 import MasterUser from "../Components/MasterUser";
 
 export default function Masters() {
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  const onCompanySelect = (companyName) => {
+    setSelectedCompany(companyName);
+  };
   const onChange = (key) => {
     console.log(key);
   };
@@ -15,12 +20,17 @@ export default function Masters() {
     {
       key: "1",
       label: "Company",
-      children: <MasterCompany />,
+      children: (
+        <MasterCompany
+          selectedCompany={selectedCompany}
+          onCompanyChange={onCompanySelect}
+        />
+      ),
     },
     {
       key: "2",
       label: "Branch",
-      children: <MasterBranch />,
+      children: <MasterBranch onSelect={onCompanySelect} />,
     },
     {
       key: "3",
@@ -32,9 +42,9 @@ export default function Masters() {
   return (
     <Layout className="layout">
       <SiderComponent />
-      <div className="main-content">
+      <Layout>
         <HeaderComponent />
-        <div className="content">
+        <Content className="content">
           <div className="tabs-container">
             <Tabs
               className="tabs"
@@ -43,8 +53,8 @@ export default function Masters() {
               onChange={onChange}
             />
           </div>
-        </div>
-      </div>
+        </Content>
+      </Layout>
     </Layout>
   );
 }
