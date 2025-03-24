@@ -9,8 +9,11 @@ import {
   Pagination,
   Table,
   message,
+  Switch,
 } from "antd";
 import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
+import trash from "../assets/image/trash.svg";
+import lock from "../assets/image/lock.svg";
 import "../styles/Masters.css";
 
 export default function MasterUser() {
@@ -19,105 +22,120 @@ export default function MasterUser() {
   const [currentRecord, setCurrentRecord] = useState(null);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
+  const [companyCategorySelects, setCompanyCategorySelects] = useState([]);
+  const [userMappingSelects, setUserMappingSelects] = useState([]);
+  const [moved, setMoved] = useState(false);
+  const [buttonText, setButtonText] = useState("NEW USER");
   const [data, setData] = useState([
     {
       key: "1",
-      branchName: "Indev Logistic",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Indev Logistic",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "2",
-      branchName: "Kerry Indev Logistic2",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic2",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "3",
-      branchName: "Kerry Indev Logistic3",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic3",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "4",
-      branchName: "Kerry Indev Logistic4",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic4",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "5",
-      branchName: "Kerry Indev Logistic5",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic5",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "6",
-      branchName: "Kerry Indev Logistic6",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic6",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "7",
-      branchName: "Kerry Indev Logistic7",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic7",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "8",
-      branchName: "Kerry Indev Logistic8",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic8",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "9",
-      branchName: "Kerry Indev Logistic9",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic9",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "10",
-      branchName: "Kerry Indev Logistic10",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic10",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
     {
       key: "11",
-      branchName: "Kerry Indev Logistic11",
-      branchRegisterNo: "KIL2332333",
-      branchAliasName: "KIL",
+      companyName: "Kerry Indev Logistic11",
+      branchName: "KIL",
+      userName: "Arun Kumar",
+      userID: "51234",
       phoneNo: "+91 88888 88888",
-      city: "Coimbatore",
-      gstNumber: "GST27AAAPA1234A1Z5",
+      email: "arunkumar123@gamil.com",
+      Roles: "Admin",
     },
   ]);
 
@@ -223,36 +241,144 @@ export default function MasterUser() {
     },
   ];
 
+  const branches = [
+    {
+      key: "1",
+      branchName: " branchName1",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "2",
+      branchName: " branchName2",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "3",
+      branchName: " branchName3",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "4",
+      branchName: " branchName4",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "5",
+      branchName: " branchName5",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "6",
+      branchName: " branchName6",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "7",
+      branchName: " branchName7",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "8",
+      branchName: " branchName8",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "9",
+      branchName: " branchName9",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "10",
+      branchName: " branchName10",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+    {
+      key: "11",
+      branchName: " branchName11",
+      companyRegisterNo: "KIL2332333",
+      companyAliasName: "KIL",
+      phoneNo: "+91 88888 88888",
+      city: "Coimbatore",
+      gstNumber: "GST27AAAPA1234A1Z5",
+    },
+  ];
+
   const columns = [
+    {
+      title: <span style={{ color: "#94A3B8" }}>Company Name</span>,
+      dataIndex: "companyName",
+      sorter: (a, b) => a.companyName.localeCompare(b.companyName),
+    },
     {
       title: <span style={{ color: "#94A3B8" }}>Branch Name</span>,
       dataIndex: "branchName",
       sorter: (a, b) => a.branchName.localeCompare(b.branchName),
     },
+
     {
-      title: <span style={{ color: "#94A3B8" }}>Branch Register No</span>,
-      dataIndex: "branchRegisterNo",
-      sorter: (a, b) => a.branchRegisterNo.localeCompare(b.branchRegisterNo),
+      title: <span style={{ color: "#94A3B8" }}>User Name</span>,
+      dataIndex: "userName",
+      sorter: (a, b) => a.userName.localeCompare(b.userName),
     },
     {
-      title: <span style={{ color: "#94A3B8" }}>Branch Alias Name</span>,
-      dataIndex: "branchAliasName",
-      sorter: (a, b) => a.branchAliasName.localeCompare(b.branchAliasName),
+      title: <span style={{ color: "#94A3B8" }}>User ID</span>,
+      dataIndex: "userID",
+      sorter: (a, b) => a.userID.localeCompare(b.userID),
     },
     {
-      title: <span style={{ color: "#94A3B8" }}>Phone No</span>,
+      title: <span style={{ color: "#94A3B8" }}>Mobile No</span>,
       dataIndex: "phoneNo",
       sorter: (a, b) => a.phoneNo.localeCompare(b.phoneNo),
     },
     {
-      title: <span style={{ color: "#94A3B8" }}>City</span>,
-      dataIndex: "city",
-      sorter: (a, b) => a.city.localeCompare(b.city),
+      title: <span style={{ color: "#94A3B8" }}>Email ID</span>,
+      dataIndex: "email",
+      sorter: (a, b) => a.email.localeCompare(b.email),
     },
     {
-      title: <span style={{ color: "#94A3B8" }}>GST Number</span>,
-      dataIndex: "gstNumber",
-      sorter: (a, b) => a.gstNumber.localeCompare(b.gstNumber),
+      title: <span style={{ color: "#94A3B8" }}>Role</span>,
+      dataIndex: "Roles",
+      sorter: (a, b) => a.Roles.localeCompare(b.Roles),
     },
     {
       title: <span style={{ color: "#94A3B8" }}>Action</span>,
@@ -269,6 +395,10 @@ export default function MasterUser() {
       ),
     },
   ];
+  const handleClick = () => {
+    setMoved(!moved);
+    setButtonText(moved ? "NEW USER" : "PORTAL USER");
+  };
 
   const onShowSizeChange = (current, pageSize) => {
     setItemsPerPage(pageSize);
@@ -297,6 +427,24 @@ export default function MasterUser() {
     setCurrentRecord(null);
   };
 
+  const handleAddCompanyCategoryRow = () => {
+    setCompanyCategorySelects([...companyCategorySelects, {}]);
+  };
+
+  const handleDeleteCompanyCategoryRow = (index) => {
+    const newSelects = companyCategorySelects.filter((_, i) => i !== index);
+    setCompanyCategorySelects(newSelects);
+  };
+
+  const handleAddUserMappingRow = () => {
+    setUserMappingSelects([...userMappingSelects, {}]);
+  };
+
+  const handleDeleteUserMappingRow = (index) => {
+    const newSelects = userMappingSelects.filter((_, i) => i !== index);
+    setUserMappingSelects(newSelects);
+  };
+
   useEffect(() => {
     if (currentRecord) {
       form.setFieldsValue(currentRecord);
@@ -305,6 +453,19 @@ export default function MasterUser() {
 
   return (
     <div className="container">
+      <div className="switch-container">
+        <Button onClick={handleClick} className="outerButton">
+          <span className={moved ? "align-left" : "align-right"}>
+            {moved ? "NEW USER" : "PORTAL USER"}
+          </span>
+          <Button
+            type="default"
+            className={`innerButton ${moved ? "move" : ""}`}
+          >
+            {moved ? "PORTAL USER" : "NEW USER"}{" "}
+          </Button>
+        </Button>
+      </div>
       <div>
         <Form
           form={form}
@@ -389,7 +550,15 @@ export default function MasterUser() {
               </div>
             </div>
             {/* Second Row */}
-            <div className="form-row">
+            <div
+              className="form-row"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                gap: 35,
+              }}
+            >
               <div className="form-item">
                 <p className="label">Email Id</p>
                 <Form.Item
@@ -419,26 +588,38 @@ export default function MasterUser() {
               </div>
             </div>
           </div>
+          {/* formContainer2 */}
           <div className="form-container2">
-            <p
-              style={{
-                fontFamily: "Inter",
-                fontWeight: "600",
-                fontSize: "16px",
-                lineHeight: "125%",
-                letterSpacing: "0.2px",
-                textTransform: "uppercase",
-              }}
-            >
-              User company - category mapping
-            </p>
+            <div className="title">
+              <p
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: "600",
+                  fontSize: "16px",
+                  lineHeight: "125%",
+                  letterSpacing: "0.2px",
+                  textTransform: "uppercase",
+                }}
+              >
+                User Company - Category Mapping
+              </p>
+              <Button
+                color="primary"
+                variant="outlined"
+                className="add-btn1"
+                onClick={handleAddCompanyCategoryRow}
+              >
+                ADD COMPANY
+              </Button>
+            </div>
             <Divider />
-            {/* Third Row */}
+
+            {/* First Row (always visible) */}
             <div className="form-row">
               <div className="form-item">
                 <p className="label">Company Name</p>
                 <Form.Item
-                  name="companyName"
+                  name="company"
                   rules={[
                     {
                       required: true,
@@ -446,22 +627,40 @@ export default function MasterUser() {
                     },
                   ]}
                 >
-                  <Input className="input-field" />
+                  <Select
+                    placeholder="Select"
+                    style={{
+                      height: 40,
+                      width: 315,
+                    }}
+                  >
+                    {companies.map((company, index) => (
+                      <Select.Option key={index} value={company.companyName}>
+                        {company.companyName}
+                      </Select.Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </div>
 
               <div className="form-item">
-                <p className="label">category Name</p>
+                <p className="label">Category Name</p>
                 <Form.Item
-                  name="companyName"
+                  name="branch"
                   rules={[
                     {
                       required: true,
-                      message: "Please input your company name!",
+                      message: "Please input your category name!",
                     },
                   ]}
                 >
-                  <Input className="input-field" />
+                  <Select
+                    placeholder="Select"
+                    style={{
+                      height: 40,
+                      width: 315,
+                    }}
+                  />
                 </Form.Item>
               </div>
 
@@ -472,28 +671,148 @@ export default function MasterUser() {
                   rules={[
                     {
                       required: true,
-                      message: "Please input your company name!",
+                      message: "Please input your organizational name!",
                     },
                   ]}
                 >
-                  <Input className="input-field" />
+                  <Select
+                    placeholder="Select"
+                    style={{
+                      height: 40,
+                      width: 315,
+                    }}
+                  />
                 </Form.Item>
               </div>
+              <div className="icon-button">
+                <div>
+                  <Button
+                    className="icon"
+                    onClick={() => handleDeleteCompanyCategoryRow(0)}
+                  >
+                    <img src={trash} alt="trash" />
+                  </Button>
+                </div>
+                <div>
+                  <Button className="icon">
+                    <img src={lock} alt="lock" />
+                  </Button>
+                </div>
+              </div>
             </div>
+
+            {/* Dynamic Rows of Select components */}
+            {companyCategorySelects.map((_, index) => (
+              <div key={index} className="form-row">
+                <div className="form-item">
+                  <Form.Item
+                    name={`company-${index}`}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your company name!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Select"
+                      style={{
+                        height: 40,
+                        width: 315,
+                      }}
+                    >
+                      {companies.map((company, companyIndex) => (
+                        <Select.Option
+                          key={companyIndex}
+                          value={company.companyName}
+                        >
+                          {company.companyName}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </div>
+
+                <div className="form-item">
+                  <Form.Item
+                    name={`branch-${index}`}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your category name!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Select"
+                      style={{
+                        height: 40,
+                        width: 315,
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+
+                <div className="form-item">
+                  <Form.Item
+                    name={`companyNameOrg-${index}`}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your organizational name!",
+                      },
+                    ]}
+                  >
+                    <Select
+                      placeholder="Select"
+                      style={{
+                        height: 40,
+                        width: 315,
+                      }}
+                    />
+                  </Form.Item>
+                </div>
+                <div className="icon-button">
+                  <div>
+                    <Button
+                      className="icon"
+                      onClick={() => handleDeleteCompanyCategoryRow(index)}
+                    >
+                      <img src={trash} alt="trash" />
+                    </Button>
+                  </div>
+                  <div>
+                    <Button className="icon">
+                      <img src={lock} alt="lock" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
           <div className="form-container3">
-            <p
-              style={{
-                fontFamily: "Inter",
-                fontWeight: "600",
-                fontSize: "16px",
-                lineHeight: "125%",
-                letterSpacing: "0.2px",
-                textTransform: "uppercase",
-              }}
-            >
-              User mapping & roles
-            </p>
+            <div className="title">
+              <p
+                style={{
+                  fontFamily: "Inter",
+                  fontWeight: "600",
+                  fontSize: "16px",
+                  lineHeight: "125%",
+                  letterSpacing: "0.2px",
+                  textTransform: "uppercase",
+                }}
+              >
+                User mapping & roles
+              </p>
+              <Button
+                color="primary"
+                variant="outlined"
+                className="add-btn2"
+                onClick={handleAddUserMappingRow}
+              >
+                ADD
+              </Button>
+            </div>
             <Divider />
             {/* Fourth Row */}
             <div className="form-row">
@@ -542,9 +861,9 @@ export default function MasterUser() {
                       width: 250,
                     }}
                   >
-                    {companies.map((company, index) => (
-                      <Select.Option key={index} value={company.companyName}>
-                        {company.companyName}
+                    {branches.map((branch, index) => (
+                      <Select.Option key={index} value={branch.branchName}>
+                        {branch.branchName}
                       </Select.Option>
                     ))}
                   </Select>
@@ -554,9 +873,12 @@ export default function MasterUser() {
               <div className="form-item">
                 <p className="label">Reporting Person</p>
                 <Form.Item
-                  name="pincode"
+                  name="reportingPerson"
                   rules={[
-                    { required: true, message: "Please input your pincode!" },
+                    {
+                      required: true,
+                      message: "Please select Reporting person!",
+                    },
                   ]}
                 >
                   <Select
@@ -566,11 +888,11 @@ export default function MasterUser() {
                       width: 250,
                     }}
                   >
-                    {companies.map((company, index) => (
+                    {/* {companies.map((company, index) => (
                       <Select.Option key={index} value={company.companyName}>
                         {company.companyName}
                       </Select.Option>
-                    ))}
+                    ))} */}
                   </Select>
                 </Form.Item>
               </div>
@@ -578,10 +900,8 @@ export default function MasterUser() {
               <div className="form-item">
                 <p className="label">Roles</p>
                 <Form.Item
-                  name="contactPerson"
-                  rules={[
-                    { required: true, message: "Please input contact person!" },
-                  ]}
+                  name="Roles"
+                  rules={[{ required: true, message: "Please select Roles!" }]}
                 >
                   <Select
                     placeholder="Select"
@@ -590,116 +910,129 @@ export default function MasterUser() {
                       width: 250,
                     }}
                   >
-                    {companies.map((company, index) => (
+                    {/* {companies.map((company, index) => (
                       <Select.Option key={index} value={company.companyName}>
                         {company.companyName}
                       </Select.Option>
-                    ))}
+                    ))} */}
                   </Select>
                 </Form.Item>
+              </div>
+              <div className="icon-button">
+                <div>
+                  <Button
+                    className="icon"
+                    onClick={() => handleDeleteCompanyCategoryRow(0)}
+                  >
+                    <img src={trash} alt="trash" />
+                  </Button>
+                </div>
+                <div>
+                  <Button className="icon">
+                    <img src={lock} alt="lock" />
+                  </Button>
+                </div>
               </div>
             </div>
-            {/* Fifth Row */}
-            <div
-              className="form-row"
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "center",
-                gap: 30,
-              }}
-            >
-              <div className="form-item">
-                <Form.Item
-                  name="contactPerson"
-                  rules={[
-                    { required: true, message: "Please input contact person!" },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select"
-                    style={{
-                      height: 40,
-                      width: 250,
-                    }}
+            {/* Dynamic Rows of Select components */}
+            {userMappingSelects.map((_, index) => (
+              <div key={index} className="form-row">
+                <div className="form-item">
+                  <Form.Item
+                    name={`company-${index}`}
+                    rules={[
+                      { required: true, message: "Please select a company!" },
+                    ]}
                   >
-                    {companies.map((company, index) => (
-                      <Select.Option key={index} value={company.companyName}>
-                        {company.companyName}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </div>
-              <div className="form-item">
-                <Form.Item
-                  name="contactPerson"
-                  rules={[
-                    { required: true, message: "Please input contact person!" },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select"
-                    style={{
-                      height: 40,
-                      width: 250,
-                    }}
+                    <Select
+                      placeholder="Select"
+                      style={{ height: 40, width: 250 }}
+                    >
+                      {companies.map((company, companyIndex) => (
+                        <Select.Option
+                          key={companyIndex}
+                          value={company.companyName}
+                        >
+                          {company.companyName}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </div>
+
+                <div className="form-item">
+                  <Form.Item
+                    name={`branch-${index}`}
+                    rules={[
+                      { required: true, message: "Please select a branch!" },
+                    ]}
                   >
-                    {companies.map((company, index) => (
-                      <Select.Option key={index} value={company.companyName}>
-                        {company.companyName}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </div>
-              <div className="form-item">
-                <Form.Item
-                  name="contactPerson"
-                  rules={[
-                    { required: true, message: "Please input contact person!" },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select"
-                    style={{
-                      height: 40,
-                      width: 250,
-                    }}
+                    <Select
+                      placeholder="Select"
+                      style={{ height: 40, width: 250 }}
+                    >
+                      {branches.map((branch, branchIndex) => (
+                        <Select.Option
+                          key={branchIndex}
+                          value={branch.branchName}
+                        >
+                          {branch.branchName}
+                        </Select.Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+                </div>
+
+                <div className="form-item">
+                  <Form.Item
+                    name={`reportingPerson-${index}`}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select a reporting person!",
+                      },
+                    ]}
                   >
-                    {companies.map((company, index) => (
-                      <Select.Option key={index} value={company.companyName}>
-                        {company.companyName}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </div>
-              <div className="form-item">
-                <Form.Item
-                  name="contactPerson"
-                  rules={[
-                    { required: true, message: "Please input contact person!" },
-                  ]}
-                >
-                  <Select
-                    placeholder="Select"
-                    style={{
-                      height: 40,
-                      width: 250,
-                    }}
+                    <Select
+                      placeholder="Select"
+                      style={{ height: 40, width: 250 }}
+                    />
+                  </Form.Item>
+                </div>
+
+                <div className="form-item">
+                  <Form.Item
+                    name={`roles-${index}`}
+                    rules={[
+                      { required: true, message: "Please select a role!" },
+                    ]}
                   >
-                    {companies.map((company, index) => (
-                      <Select.Option key={index} value={company.companyName}>
-                        {company.companyName}
-                      </Select.Option>
-                    ))}
-                  </Select>
-                </Form.Item>
+                    <Select
+                      placeholder="Select"
+                      style={{ height: 40, width: 250 }}
+                    />
+                  </Form.Item>
+                </div>
+
+                <div className="icon-button">
+                  <div>
+                    <Button
+                      className="icon"
+                      onClick={() => handleDeleteUserMappingRow(index)}
+                    >
+                      <img src={trash} alt="trash" />
+                    </Button>
+                  </div>
+                  <div>
+                    <Button className="icon">
+                      <img src={lock} alt="lock" />
+                    </Button>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
+
           {/* Submit Button */}
           <div className="btn-container">
             <div className="btn-item">
