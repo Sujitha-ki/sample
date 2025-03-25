@@ -864,10 +864,20 @@
 //     </div>
 //   );
 // }
+
 import React, { useState } from "react";
-import { Modal, Button, Select, List, Progress, Upload } from "antd";
-import { Dragger } from "antd/es/upload";
-import { CloudUploadOutlined } from "@ant-design/icons";
+import {
+  Modal,
+  Button,
+  Select,
+  List,
+  Progress,
+  Upload,
+  notification,
+  Space,
+} from "antd";
+
+import { CloudUploadOutlined, DeleteOutlined } from "@ant-design/icons";
 
 // Helper function to format the file size
 const formatFileSize = (size) => {
@@ -875,14 +885,47 @@ const formatFileSize = (size) => {
   if (size < 1024 * 1024) return `${(size / 1024).toFixed(2)} KB`;
   return `${(size / (1024 * 1024)).toFixed(2)} MB`;
 };
+const { Dragger } = Upload;
+// Centralized style objects
+const styles = {
+  button: {
+    height: 40,
+    width: 250,
+  },
+  select: {
+    width: 472,
+    height: 55,
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingTop: 11,
+    paddingRight: 12,
+    paddingBottom: 11,
+    paddingLeft: 12,
+    border: "1 solid #E2E8F0",
+  },
+  dragger: {
+    width: 472,
+    height: 264,
+    gap: 30,
+    borderRadius: 20,
+    paddingTop: 40,
+    paddingRight: 60,
+    paddingBottom: 40,
+    paddingLeft: 60,
+    backgroundColor: "#2563EB0F",
+    border: "2px dashed #2563EB",
+  },
+};
 
 const UploadDocumentModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [uploadedFiles, setUploadedFiles] = useState({
+    GST: [],
+    Logo: [],
+  });
   const [selectedDocumentType, setSelectedDocumentType] = useState("");
   const [fileProgress, setFileProgress] = useState({});
   const [fileRestrictions, setFileRestrictions] = useState("");
-  const { Dragger } = Upload;
 
   // Function to show the modal
   const showModal = () => {
@@ -892,11 +935,17 @@ const UploadDocumentModal = () => {
   // Function to handle the OK button (can be used for finalizing upload or closing the modal)
   const handleOk = () => {
     setIsModalOpen(false);
+    // Clean up the file states when the modal closes
+    setUploadedFiles({ GST: [], Logo: [] });
+    setFileProgress({});
   };
 
   // Function to handle cancel button (closes the modal)
   const handleCancel = () => {
     setIsModalOpen(false);
+    // Clean up the file states when the modal closes
+    setUploadedFiles({ GST: [], Logo: [] });
+    setFileProgress({});
   };
 
   // Function to handle the document type selection
@@ -909,45 +958,77 @@ const UploadDocumentModal = () => {
     }
   };
 
+  // Function to validate file type
+  const validateFileType = (file) => {
+    const regex = new RegExp(
+      `\.(${fileRestrictions
+        .split(",")
+        .map((ext) => ext.trim().slice(1))
+        .join("|")})$`,
+      "i"
+    );
+    return regex.test(file.name);
+  };
+
   // Function to handle the file change/upload
   const handleFileChange = (info) => {
-    if (info.file.status === "uploading") {
-      setUploadedFiles((prevFiles) => [
-        ...prevFiles,
-        {
-          name: info.file.name,
-          size: info.file.size,
-          status: "uploading",
-          progress: 0,
-        },
-      ]);
-    }
+    const file = info.file;
 
-    if (info.file.status === "done") {
-      setUploadedFiles((prevFiles) => {
-        return prevFiles.map((file) =>
-          file.name === info.file.name
-            ? {
-                ...file,
-                status: "success",
-                progress: 100,
-              }
-            : file
-        );
+    // Validate file type
+    if (!validateFileType(file)) {
+      notification.error({
+        message: "Invalid File Type",
+        description: `Only ${fileRestrictions} files are allowed for ${selectedDocumentType}`,
       });
+      return;
     }
 
-    if (info.file.status === "error") {
-      setUploadedFiles((prevFiles) => {
-        return prevFiles.map((file) =>
-          file.name === info.file.name
-            ? {
-                ...file,
-                status: "error",
-                progress: 0,
-              }
-            : file
-        );
+    // Check if a file is already uploaded for the selected type
+    const uploadedFileList = uploadedFiles[selectedDocumentType];
+    if (uploadedFileList.length > 0) {
+      notification.warning({
+        message: `${selectedDocumentType} Already Uploaded`,
+        description: `You have already uploaded a ${selectedDocumentType.toLowerCase()}. If you want to upload a new one, delete the existing one first.`,
+        duration: 5,
+      });
+      return;
+    }
+
+    // Add the file to the uploaded files list and track its progress
+    if (file.status === "uploading") {
+      const newFile = {
+        name: file.name,
+        size: file.size,
+        status: "uploading",
+        progress: 0,
+        type: selectedDocumentType,
+      };
+
+      setUploadedFiles((prevFiles) => ({
+        ...prevFiles,
+        [selectedDocumentType]: [...prevFiles[selectedDocumentType], newFile],
+      }));
+    }
+
+    if (file.status === "done") {
+      setUploadedFiles((prevFiles) => ({
+        ...prevFiles,
+        [selectedDocumentType]: prevFiles[selectedDocumentType].map((f) =>
+          f.name === file.name ? { ...f, status: "done", progress: 100 } : f
+        ),
+      }));
+    }
+
+    if (file.status === "error") {
+      setUploadedFiles((prevFiles) => ({
+        ...prevFiles,
+        [selectedDocumentType]: prevFiles[selectedDocumentType].map((f) =>
+          f.name === file.name ? { ...f, status: "error", progress: 0 } : f
+        ),
+      }));
+      notification.error({
+        message: "Upload Failed",
+        description: `Failed to upload ${file.name}. Please try again.`,
       });
     }
   };
@@ -970,25 +1051,29 @@ const UploadDocumentModal = () => {
 
     // Simulating a file upload completion after 3 seconds
     setTimeout(() => {
-      setUploadedFiles((prevFiles) => {
-        return prevFiles.map((f) =>
+      setUploadedFiles((prevFiles) => ({
+        ...prevFiles,
+        [selectedDocumentType]: prevFiles[selectedDocumentType].map((f) =>
           f.name === file.name ? { ...f, status: "done", progress: 100 } : f
-        );
-      });
+        ),
+      }));
     }, 3000);
+  };
+
+  // Function to delete a file
+  const handleDeleteFile = (fileName, documentType) => {
+    setUploadedFiles((prevFiles) => ({
+      ...prevFiles,
+      [documentType]: prevFiles[documentType].filter(
+        (file) => file.name !== fileName
+      ),
+    }));
   };
 
   return (
     <div className="form-item">
       <p className="label">Upload Documents</p>
-      <Button
-        style={{
-          height: 40,
-          width: 250,
-        }}
-        className="upload-btn"
-        onClick={showModal}
-      >
+      <Button style={styles.button} className="upload-btn" onClick={showModal}>
         Upload
       </Button>
       <Modal
@@ -1006,27 +1091,11 @@ const UploadDocumentModal = () => {
             <div>
               <Select
                 placeholder="Select Documents"
-                style={{
-                  width: 472,
-                  height: 55,
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  paddingTop: 11,
-                  paddingRight: 12,
-                  paddingBottom: 11,
-                  paddingleft: 12,
-                  border: "1 solid #E2E8F0",
-                }}
+                style={styles.select}
                 onChange={handleChange}
                 options={[
-                  {
-                    value: "GST",
-                    label: "GST",
-                  },
-                  {
-                    value: "Logo",
-                    label: "Logo",
-                  },
+                  { value: "GST", label: "GST" },
+                  { value: "Logo", label: "Logo" },
                 ]}
               />
             </div>
@@ -1039,18 +1108,7 @@ const UploadDocumentModal = () => {
                   onSuccess();
                 }}
                 accept={fileRestrictions} // Apply the file restrictions dynamically
-                style={{
-                  width: 472,
-                  height: 264,
-                  gap: 30,
-                  borderRadius: 20,
-                  paddingTop: 40,
-                  paddingRight: 60,
-                  paddingBottom: 40,
-                  paddingleft: 60,
-                  backgroundColor: "#2563EB0F",
-                  border: "2px dashed #2563EB",
-                }}
+                style={styles.dragger}
               >
                 <p className="ant-upload-drag-icon">
                   <CloudUploadOutlined />
@@ -1066,36 +1124,113 @@ const UploadDocumentModal = () => {
           </div>
           <div className="modalRight-Content">
             <div className="uploading-status">
-              {uploadedFiles.length > 0 ? (
-                <List
-                  Divider
-                  dataSource={uploadedFiles}
-                  renderItem={(file) => (
-                    <List.Item>
-                      <div>
-                        <span>{file.name}</span>
-                        <br />
-                        <span>
-                          {selectedDocumentType} • {formatFileSize(file.size)} •{" "}
-                          {file.status}
-                        </span>
-                      </div>
-                      {file.status === "uploading" && (
-                        <div style={{ width: "100%", marginTop: 10 }}>
-                          <Progress
-                            percent={fileProgress[file.name] || 0}
-                            size="small"
-                            status={
-                              file.status === "uploading" ? "active" : "success"
-                            }
-                          />
+              {/* Show uploaded GST files */}
+              {uploadedFiles.GST.length > 0 && (
+                <div>
+                  <h3>GST Files</h3>
+                  <List
+                    divider
+                    dataSource={uploadedFiles.GST}
+                    renderItem={(file) => (
+                      <List.Item>
+                        <div>
+                          <span>{file.name}</span>
+                          <br />
+                          <span>
+                            {file.type} • {formatFileSize(file.size)} •{" "}
+                            {file.status}
+                          </span>
                         </div>
-                      )}
-                    </List.Item>
-                  )}
-                />
-              ) : (
-                <p>No files uploaded yet</p>
+                        {file.status === "uploading" && (
+                          <div style={{ width: "100%", marginTop: 10 }}>
+                            <Progress
+                              percent={fileProgress[file.name] || 0}
+                              size="small"
+                              status={
+                                file.status === "uploading"
+                                  ? "active"
+                                  : "success"
+                              }
+                            />
+                          </div>
+                        )}
+                        {file.status === "done" && (
+                          <div style={{ width: "100%", marginTop: 10 }}>
+                            <Progress
+                              percent={100}
+                              size="small"
+                              status="success"
+                            />
+                          </div>
+                        )}
+                        <Space>
+                          <Button
+                            icon={<DeleteOutlined />}
+                            size="small"
+                            danger
+                            onClick={() => handleDeleteFile(file.name, "GST")}
+                          >
+                            Delete
+                          </Button>
+                        </Space>
+                      </List.Item>
+                    )}
+                  />
+                </div>
+              )}
+              {/* Show uploaded Logo files */}
+              {uploadedFiles.Logo.length > 0 && (
+                <div>
+                  <h3>Logo Files</h3>
+                  <List
+                    divider
+                    dataSource={uploadedFiles.Logo}
+                    renderItem={(file) => (
+                      <List.Item>
+                        <div>
+                          <span>{file.name}</span>
+                          <br />
+                          <span>
+                            {file.type} • {formatFileSize(file.size)} •{" "}
+                            {file.status}
+                          </span>
+                        </div>
+                        {file.status === "uploading" && (
+                          <div style={{ width: "100%", marginTop: 10 }}>
+                            <Progress
+                              percent={fileProgress[file.name] || 0}
+                              size="small"
+                              status={
+                                file.status === "uploading"
+                                  ? "active"
+                                  : "success"
+                              }
+                            />
+                          </div>
+                        )}
+                        {file.status === "done" && (
+                          <div style={{ width: "100%", marginTop: 10 }}>
+                            <Progress
+                              percent={100}
+                              size="small"
+                              status="success"
+                            />
+                          </div>
+                        )}
+                        <Space>
+                          <Button
+                            icon={<DeleteOutlined />}
+                            size="small"
+                            danger
+                            onClick={() => handleDeleteFile(file.name, "Logo")}
+                          >
+                            Delete
+                          </Button>
+                        </Space>
+                      </List.Item>
+                    )}
+                  />
+                </div>
               )}
             </div>
           </div>
